@@ -1,0 +1,397 @@
+/* ===== Hero.css — SKIPSCROLL Classic Netflix Aesthetic ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ---------- Variables ---------- */
+:root {
+  --crimson: #b91c1c;
+  --crimson-bright: #dc2626;
+  --crimson-deep: #7f1d1d;
+  --crimson-glow: rgba(185, 28, 28, 0.6);
+  --gunmetal: #18181f;
+  --gunmetal-light: #26262f;
+  --gunmetal-edge: #323240;
+  --charcoal: #08080a;
+  --charcoal-mid: #0e0e12;
+  --white: #f5f5f5;
+  --gray: #7a7a8e;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* ==================== HERO ==================== */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--charcoal);
+}
+
+/* -------- Background System -------- */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Layer 1 — image background + brushed-metal grain */
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* subtle horizontal brushed-metal grain */
+    repeating-linear-gradient(0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.007) 2px,
+      rgba(255, 255, 255, 0.007) 3px),
+    /* diagonal silk weave A */
+    repeating-linear-gradient(135deg,
+      transparent 0px,
+      transparent 6px,
+      rgba(185, 28, 28, 0.022) 6px,
+      rgba(185, 28, 28, 0.022) 7px),
+    /* diagonal silk weave B */
+    repeating-linear-gradient(-135deg,
+      transparent 0px,
+      transparent 6px,
+      rgba(185, 28, 28, 0.016) 6px,
+      rgba(185, 28, 28, 0.016) 7px),
+    /* base image */
+    url('./images/imagebg.webp') center / cover no-repeat;
+}
+
+/* Layer 2 — fractal noise for textile feel */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 250px 250px;
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+}
+
+/* Layer 3 — SVG circuit grid with crimson nodes */
+.hero-circuit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='g' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M100 0L0 0 0 100' fill='none' stroke='rgba(185,28,28,0.07)' stroke-width='0.4'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='rgba(185,28,28,0.09)'/%3E%3Ccircle cx='100' cy='0' r='1.2' fill='rgba(185,28,28,0.09)'/%3E%3Ccircle cx='0' cy='100' r='1.2' fill='rgba(185,28,28,0.09)'/%3E%3Ccircle cx='50' cy='50' r='0.7' fill='rgba(185,28,28,0.05)'/%3E%3Cpath d='M50 0L50 20M0 50L20 50' stroke='rgba(185,28,28,0.04)' stroke-width='0.3' fill='none'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* Layer 4 — very faint ambient crimson pools */
+.hero-ambient {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-ambient--tl {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(185, 28, 28, 0.045) 0%, transparent 70%);
+  filter: blur(150px);
+  top: -22%;
+  left: -12%;
+}
+
+.hero-ambient--br {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(185, 28, 28, 0.035) 0%, transparent 70%);
+  filter: blur(130px);
+  bottom: -15%;
+  right: -8%;
+}
+
+.hero-ambient--c {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(127, 29, 29, 0.025) 0%, transparent 70%);
+  filter: blur(120px);
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ==================== NAVBAR ==================== */
+.hero-nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  padding: 30px 56px;
+}
+
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-brand-name {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  color: var(--white);
+  user-select: none;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* Helps it pop against the background */
+}
+
+.hero-brand-highlight {
+  color: var(--crimson-bright);
+}
+
+/* ==================== CONTENT ==================== */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px 110px;
+  gap: 28px;
+}
+
+/* ---- Headline ---- */
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 7.5vw, 7rem);
+  line-height: 1.0;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--white);
+  max-width: 880px;
+  user-select: none;
+}
+
+.hero-line {
+  display: block;
+  -webkit-text-stroke: 1.2px var(--crimson);
+  paint-order: stroke fill;
+}
+
+.hero-line+.hero-line {
+  margin-top: 2px;
+}
+
+/* ---- Pitch ---- */
+.hero-pitch {
+  font-family: var(--font-body);
+  font-size: clamp(0.92rem, 1.4vw, 1.1rem);
+  color: var(--gray);
+  max-width: 500px;
+  line-height: 1.75;
+  letter-spacing: 0.2px;
+  font-weight: 400;
+}
+
+/* ==================== CTA BUTTON ==================== */
+.hero-cta-wrap {
+  position: relative;
+  margin-top: 10px;
+}
+
+/* The button itself — geometric shield / octagon shape */
+.hero-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 54px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--white);
+  background: linear-gradient(155deg, var(--crimson-deep) 0%, var(--crimson) 100%);
+  clip-path: polygon(4% 0%, 96% 0%, 100% 12%, 100% 88%, 96% 100%, 4% 100%, 0% 88%, 0% 12%);
+  transition: background 0.35s ease, transform 0.25s ease, box-shadow 0.35s ease;
+  z-index: 2;
+}
+
+/* Gunmetal frame behind button */
+.hero-cta-frame {
+  position: absolute;
+  inset: -5px;
+  clip-path: polygon(4% 0%, 96% 0%, 100% 12%, 100% 88%, 96% 100%, 4% 100%, 0% 88%, 0% 12%);
+  background: linear-gradient(155deg,
+      var(--gunmetal-edge) 0%,
+      var(--gunmetal) 50%,
+      var(--gunmetal-edge) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Rotating perimeter trace — hidden by default, revealed on hover */
+.hero-cta-trace {
+  position: absolute;
+  inset: -6px;
+  clip-path: polygon(4% 0%, 96% 0%, 100% 12%, 100% 88%, 96% 100%, 4% 100%, 0% 88%, 0% 12%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.hero-cta-trace::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 0deg,
+      transparent 0%,
+      var(--crimson-bright) 6%,
+      rgba(185, 28, 28, 0.15) 12%,
+      transparent 18%,
+      transparent 100%);
+  animation: perimeter-spin 1.8s linear infinite paused;
+}
+
+/* Inner mask — keeps only the outer edge visible */
+.hero-cta-trace::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  clip-path: polygon(4% 0%, 96% 0%, 100% 12%, 100% 88%, 96% 100%, 4% 100%, 0% 88%, 0% 12%);
+  background: var(--charcoal);
+}
+
+/* Hover states */
+.hero-cta:hover {
+  background: linear-gradient(155deg, var(--crimson) 0%, var(--crimson-bright) 100%);
+  transform: scale(1.05);
+  box-shadow: 0 0 25px 5px rgba(185, 28, 28, 0.45);
+  /* Classic glow effect */
+}
+
+.hero-cta-wrap:hover .hero-cta-trace {
+  opacity: 1;
+}
+
+.hero-cta-wrap:hover .hero-cta-trace::before {
+  animation-play-state: running;
+}
+
+/* Soft glow beneath button on hover */
+.hero-cta-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(185, 28, 28, 0.25) 0%, transparent 70%);
+  filter: blur(14px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+}
+
+.hero-cta-wrap:hover .hero-cta-glow {
+  opacity: 1;
+}
+
+.hero-cta:active {
+  transform: scale(0.97);
+}
+
+.hero-cta-arrow {
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.hero-cta:hover .hero-cta-arrow {
+  transform: translateX(5px);
+}
+
+/* Particle canvas (button-local hover micro-particles) */
+.hero-cta-particles {
+  position: absolute;
+  inset: -80px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes perimeter-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================== THIN FRAME ==================== */
+.hero-frame {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(185, 28, 28, 0.08);
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .hero-nav {
+    padding: 22px 28px;
+  }
+
+  .hero-brand-name {
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+  }
+
+  .hero-content {
+    padding: 0 20px 70px;
+    gap: 22px;
+  }
+
+  .hero-cta {
+    padding: 17px 42px;
+    font-size: 0.82rem;
+  }
+
+  .hero-frame {
+    inset: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-nav {
+    padding: 18px 20px;
+  }
+
+  .hero-brand-name {
+    font-size: 1.6rem;
+  }
+
+  .hero-content {
+    padding: 0 16px 56px;
+    gap: 18px;
+  }
+
+  .hero-headline {
+    letter-spacing: 2px;
+  }
+
+  .hero-cta {
+    padding: 15px 32px;
+    font-size: 0.76rem;
+    letter-spacing: 2.5px;
+  }
+}
