@@ -67,7 +67,8 @@ function SecondPage({ onBack }) {
     console.log("Sending to Python:", answers);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/match-vibe", {
+      // ✅ FIXED: Pointing directly to your live Render backend
+      const response = await fetch("https://skip-scroll.onrender.com/api/match-vibe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,17 +83,16 @@ function SecondPage({ onBack }) {
       const result = await response.json();
       console.log("Python Backend says:", result);
 
-      // 👇 THE FIX: Show UI if success, alert if error 👇
       if (result.status === "success") {
-        setResults(result.movies); // Save the 5 movies to state
-        setStep(5); // Move to the shiny new Step 5 Results Page
+        setResults(result.movies);
+        setStep(5);
       } else {
         alert(`Oops! 🎬\n\n${result.message}`);
       }
 
     } catch (error) {
       console.error("Failed to connect to Python backend:", error);
-      alert("Failed to connect. Is your Python Uvicorn server running?");
+      alert("Failed to connect to the AI brain. Please check your internet connection and try again.");
     } finally {
       setIsProcessing(false);
     }
@@ -115,7 +115,7 @@ function SecondPage({ onBack }) {
             if (isProcessing) return;
             if (step === 5) {
               setStep(4);
-              setResults([]); // Clear results if they hit back
+              setResults([]);
             }
             else if (step === 4) setStep(3);
             else if (step === 3) setStep(2);
@@ -281,7 +281,7 @@ function SecondPage({ onBack }) {
           </>
         )}
 
-        {/* 👇 NEW: STEP 5 (THE RESULTS PAGE) 👇 */}
+        {/* STEP 5 (THE RESULTS PAGE) */}
         {step === 5 && !isProcessing && results.length > 0 && (
           <div className="results-container">
             <h1 className="sp-headline" style={{ marginBottom: '2rem' }}>
@@ -300,7 +300,6 @@ function SecondPage({ onBack }) {
                   <span>• {results[0].format_type}</span>
                 </div>
                 <p className="hero-plot">{results[0].overview}</p>
-                {/* A nice touch: A generic google search link or JustWatch link could go here */}
                 <button
                   className="watch-now-btn"
                   onClick={() => window.open(`https://www.google.com/search?q=Watch ${results[0].title} online ${results[0].release_date?.substring(0, 4)}`, '_blank')}
